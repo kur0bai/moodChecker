@@ -35,12 +35,12 @@ class Functions:
 
                 # Draw circles around the finded faces xd
                 for (x, y, width, height) in faces:
-                    cv2.circle(frame, (x, y), (x + width, y + height), (0, 255, 0), 2)
+                    cv2.rectangle(frame, (x, y), (x + width, y + height), (0, 255, 0), 2)
 
                 cv2.imshow('Face Detector', frame)
 
                 # Wait for quit word to leave
-                if cv2.waitKey(1) & 0xFF == ord('quit'):
+                if cv2.waitKey(1) & 0xFF == ord('q'):
                     break    
 
             capture.release()
