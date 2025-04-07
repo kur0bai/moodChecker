@@ -1,5 +1,6 @@
 import cv2
 import cv2.data
+from deepface import DeepFace
 
 
 class Functions:
@@ -14,7 +15,13 @@ class Functions:
 
     def detect_emotion(self, face_img):
         face_path = "face.jpg"
-        cv2.INWRITE(face_path, face_img)
+        cv2.imwrite(face_path, face_img)
+
+        # analyze
+        analysis = DeepFace.analyze(img_path=face_path, actions=[
+                                    'emotion'], enforce_detection=False)
+        emotion = analysis[0]['dominant_emotion']
+        print('Main Emotion is ', emotion)
 
     def start_capturing(self):
         """
