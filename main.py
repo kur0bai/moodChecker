@@ -22,39 +22,43 @@ class Functions:
                 "Warning: Your device can't open the Camera, please check it.")
 
     def detect_emotion(self, face_img, frame, dimensions):
-        face_path = "face.jpg"
-        cv2.imwrite(face_path, face_img)
+        try:
+            face_path = "face.jpg"
+            cv2.imwrite(face_path, face_img)
 
-        # analyze
-        analysis = DeepFace.analyze(img_path=face_path, actions=[
-                                    'emotion'], enforce_detection=False)
-        emotion = analysis[0]['dominant_emotion']
-        print('Main Emotion is ', emotion)
+            # analyze
+            analysis = DeepFace.analyze(img_path=face_path, actions=[
+                                        'emotion'], enforce_detection=False)
+            emotion = analysis[0]['dominant_emotion']
 
-        print('Dimensions ===> ', dimensions)
+            name = 'Subject'
+            label = f"{name} is {emotion}" if name != "Unknown" else f"{emotion}"
+            cv2.rectangle(frame, (dimensions["x"], dimensions["y"]), (dimensions["x"] +
+                                                                      dimensions["w"], dimensions["y"] + dimensions["h"]), (0, 255, 0), 2)
 
-        label = f"{name} - {emotion}" if name != "Unknown" else f"{emotion}"
+            cv2.putText(frame, label, (dimensions["x"], dimensions["y"] - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)
 
-        # cv2.putText(frame, label, (dimensions.x, dimensions.y - 10),
-        #            cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)
+            # recon
+            """ name = "Unknown"
+            db_path = "faces"
+            if os.path.exists(db_path):
+                result = DeepFace.find(
+                    img_path=face_path, db_path=db_path, enforce_detection=False)
+                if len(result) > 0 and not result[0].empty:
+                    matched_path = result[0].iloc[0]['identity']
+                    name = os.path.basename(
+                        os.path.dirname(matched_path))
 
-        # recon
-        name = "Unknown"
-        db_path = "faces"
-        if os.path.exists(db_path):
-            result = DeepFace.find(
-                img_path=face_path, db_path=db_path, enforce_detection=False)
-            if len(result) > 0 and not result[0].empty:
-                matched_path = result[0].iloc[0]['identity']
-                name = os.path.basename(
-                    os.path.dirname(matched_path))
+                    # Mostrar info en pantalla
+                    label = f"{name} - {emotion}" if name != "Unknown" else f"{emotion}"
+                    cv2.rectangle(frame, (dimensions["x"], dimensions["y"]), (dimensions["x"] +
+                                dimensions["width"], dimensions["y"] + dimensions["height"]), (0, 255, 0), 2)
+                    cv2.putText(frame, label, (dimensions["x"], dimensions["y"] - 10),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2) """
 
-                # Mostrar info en pantalla
-                label = f"{name} - {emotion}" if name != "Unknown" else f"{emotion}"
-                cv2.rectangle(frame, (dimensions.x, dimensions.y), (dimensions.x +
-                              dimensions.w, dimensions.y + dimensions.h), (0, 255, 0), 2)
-                cv2.putText(frame, label, (dimensions.x, dimensions.y - 10),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)
+        except Exception as ex:
+            print(f'Something went wrong: {ex}')
 
     def start_capturing(self):
         """
