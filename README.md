@@ -19,7 +19,7 @@ AI-based face and emotion detector with Deepface and Tensorflow to detect predom
 
 ```bash
 git clone https://github.com/kur0bai/moodChecker.git
-cd scrappus
+cd moodChecker
 ```
 
 ### 2. Run it in Docker
