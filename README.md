@@ -37,6 +37,8 @@ sudo docker run -it --rm --device=/dev/video0:/dev/video0 --env DISPLAY=$DISPLAY
 NOTE: You can change the name of the application as you need it, this example is with `feeling-app`
 You can close the app using the key `q` or stopping the execution.
 
+<p align="left" width="100%"><img src="https://imgur.com/2FzOlQx.png" height="300" /></p>
+
 Easy right? :fish_cake:
 
 ### Important:  :pushpin:
